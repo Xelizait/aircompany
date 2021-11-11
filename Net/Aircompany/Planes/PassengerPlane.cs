@@ -5,6 +5,14 @@ namespace Aircompany.Planes
     public class PassengerPlane : Plane
     {
         public int _passengersCapacity;
+        public int PassengersCapacity
+        {
+            get { return _passengersCapacity; }
+            private set
+            {
+                _passengersCapacity = value;
+            }
+        }
 
         public PassengerPlane(string model, int maxSpeed, int maxFlightDistance, int maxLoadCapacity, int passengersCapacity)
             :base(model, maxSpeed, maxFlightDistance, maxLoadCapacity)
@@ -22,24 +30,15 @@ namespace Aircompany.Planes
 
         public override int GetHashCode()
         {
-            var hashCode = 751774561;
-            hashCode = hashCode * -1521134295 + base.GetHashCode();
-            hashCode = hashCode * -1521134295 + _passengersCapacity.GetHashCode();
-            return hashCode;
+            return base.GetHashCode() ^ _passengersCapacity.GetHashCode();
         }
 
-        public int PassengersCapacityIs()
-        {
-            return _passengersCapacity;
-        }
+        //public int PassengersCapacityIs()
+        //{
+        //    return _passengersCapacity;
+        //}
 
-       
-        public override string ToString()
-        {
-            return base.ToString().Replace("}",
-                    ", passengersCapacity=" + _passengersCapacity +
-                    '}');
-        }       
-        
+        public override string ToString() => base.ToString().Replace("}", $", passengersCapacity={PassengersCapacity}}}");
+
     }
 }

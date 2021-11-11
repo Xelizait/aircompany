@@ -18,9 +18,9 @@ namespace Aircompany
         public List<PassengerPlane> GetPassengersPlanes()
         {
             List<PassengerPlane> passengerPlanes = new List<PassengerPlane>();
-            for (int i=0; i < Planes.Count; i++)
-            {
-                if (Planes[i].GetType() == typeof(PassengerPlane))
+            for (int i = 0; i < Planes.Count; i++)
+            { 
+                if (Planes[i] is PassengerPlane)
                 {
                     passengerPlanes.Add((PassengerPlane)Planes[i]);
                 }
@@ -33,7 +33,7 @@ namespace Aircompany
             List<MilitaryPlane> militaryPlanes = new List<MilitaryPlane>();
             for (int i = 0; i < Planes.Count; i++)
             {
-                if (Planes[i].GetType() == typeof(MilitaryPlane))
+                if (Planes[i] is MilitaryPlane)
                 {
                     militaryPlanes.Add((MilitaryPlane)Planes[i]);
                 }
@@ -44,7 +44,7 @@ namespace Aircompany
         public PassengerPlane GetPassengerPlaneWithMaxPassengersCapacity()
         {
             List<PassengerPlane> passengerPlanes = GetPassengersPlanes();
-            return passengerPlanes.Aggregate((w, x) => w.PassengersCapacityIs() > x.PassengersCapacityIs() ? w : x);             
+            return passengerPlanes.Aggregate((w, x) => w.PassengersCapacity > x.PassengersCapacity ? w : x);
         }
 
         public List<MilitaryPlane> GetTransportMilitaryPlanes()
@@ -54,7 +54,7 @@ namespace Aircompany
             for (int i = 0; i < militaryPlanes.Count; i++)
             {
                 MilitaryPlane plane = militaryPlanes[i];
-                if (plane.PlaneTypeIs() == MilitaryType.TRANSPORT)
+                if (plane.Type == MilitaryType.Transport)
                 {
                     transportMilitaryPlanes.Add(plane);
                 }
@@ -65,19 +65,18 @@ namespace Aircompany
 
         public Airport SortByMaxDistance()
         {
-            return new Airport(Planes.OrderBy(w => w.MAXFlightDistance()));
+            return new Airport(Planes.OrderBy(w => w.MaxFlightDistance));
         }
 
         public Airport SortByMaxSpeed()
         {
-            return new Airport(Planes.OrderBy(w => w.GetMS()));
+            return new Airport(Planes.OrderBy(w => w.MaxSpeed));
         }
 
         public Airport SortByMaxLoadCapacity()
         {
-            return new Airport(Planes.OrderBy(w => w.MAXLoadCapacity()));
+            return new Airport(Planes.OrderBy(w => w.MaxLoadCapacity));
         }
-
 
         public IEnumerable<Plane> GetPlanes()
         {
@@ -87,7 +86,7 @@ namespace Aircompany
         public override string ToString()
         {
             return "Airport{" +
-                    "planes=" + string.Join(", ", Planes.Select(x => x.GetModel())) +
+                    "planes=" + string.Join(", ", Planes.Select(x => x.Model)) +
                     '}';
         }
     }

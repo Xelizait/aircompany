@@ -4,10 +4,45 @@ namespace Aircompany.Planes
 {
     public abstract class Plane
     {
-        public string _model;
-        public int _maxSpeed;
-        public int _maxFlightDistance;
-        public int _maxLoadCapacity;
+        private string _model;
+        public string Model
+        {
+            get { return _model; }
+            set
+            {
+                _model = value;
+            }
+        }
+
+        private int _maxSpeed;
+        public int MaxSpeed
+        {
+            get { return _maxSpeed; }
+            set
+            {
+                _maxSpeed = value;
+            }
+        }
+
+        private int _maxFlightDistance;
+        public int MaxFlightDistance
+        {
+            get { return _maxFlightDistance; }
+            set
+            {
+                _maxFlightDistance = value;
+            }
+        }
+
+        private int _maxLoadCapacity;
+        public int MaxLoadCapacity
+        {
+            get { return _maxLoadCapacity; }
+            set
+            {
+                _maxLoadCapacity = value;
+            }
+        }
 
         public Plane(string model, int maxSpeed, int maxFlightDistance, int maxLoadCapacity)
         {
@@ -15,26 +50,6 @@ namespace Aircompany.Planes
             _maxSpeed = maxSpeed;
             _maxFlightDistance = maxFlightDistance;
             _maxLoadCapacity = maxLoadCapacity;
-        }
-
-        public string GetModel()
-        {
-            return _model;
-        }
-
-        public int GetMS()
-        {
-            return _maxSpeed;
-        }
-
-        public int MAXFlightDistance()
-        {
-            return _maxFlightDistance;
-        }
-
-        public int MAXLoadCapacity()
-        {
-            return _maxLoadCapacity;
         }
 
         public override string ToString()
@@ -59,13 +74,8 @@ namespace Aircompany.Planes
 
         public override int GetHashCode()
         {
-            var hashCode = -1043886837;
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(_model);
-            hashCode = hashCode * -1521134295 + _maxSpeed.GetHashCode();
-            hashCode = hashCode * -1521134295 + _maxFlightDistance.GetHashCode();
-            hashCode = hashCode * -1521134295 + _maxLoadCapacity.GetHashCode();
-            return hashCode;
-        }        
+            return _model.GetHashCode() ^ _maxSpeed.GetHashCode() ^ _maxFlightDistance.GetHashCode() ^ _maxLoadCapacity.GetHashCode();
+        }
 
     }
 }

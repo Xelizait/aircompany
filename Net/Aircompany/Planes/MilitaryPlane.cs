@@ -4,12 +4,20 @@ namespace Aircompany.Planes
 {
     public class MilitaryPlane : Plane
     {
-        public MilitaryType _type;
+        private MilitaryType _type;
+        public MilitaryType Type
+        {
+            get { return _type; }
+            private set
+            {
+                _type = value;
+            }
+        }
 
         public MilitaryPlane(string model, int maxSpeed, int maxFlightDistance, int maxLoadCapacity, MilitaryType type)
             : base(model, maxSpeed, maxFlightDistance, maxLoadCapacity)
         {
-            _type = type;
+            Type = type;
         }
 
         public override bool Equals(object obj)
@@ -22,23 +30,14 @@ namespace Aircompany.Planes
 
         public override int GetHashCode()
         {
-            var hashCode = 1701194404;
-            hashCode = hashCode * -1521134295 + base.GetHashCode();
-            hashCode = hashCode * -1521134295 + _type.GetHashCode();
-            return hashCode;
+            return base.GetHashCode() ^ _type.GetHashCode();
         }
 
-        public MilitaryType PlaneTypeIs()
-        {
-            return _type;
-        }
+        //public MilitaryType PlaneTypeIs()
+        //{
+        //    return _type;
+        //}
 
-
-        public override string ToString()
-        {
-            return base.ToString().Replace("}",
-                    ", type=" + _type +
-                    '}');
-        }        
+        public override string ToString() => base.ToString().Replace("}", $", type={Type}}}");
     }
 }
