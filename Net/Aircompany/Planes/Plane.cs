@@ -1,80 +1,50 @@
 ﻿using System.Collections.Generic;
+using System;
 
 namespace Aircompany.Planes
 {
-    public abstract class Plane
+    public abstract class Plane : IComparable<Plane>
     {
-        private string _model;
-        public string Model
-        {
-            get { return _model; }
-            set
-            {
-                _model = value;
-            }
-        }
-
-        private int _maxSpeed;
-        public int MaxSpeed
-        {
-            get { return _maxSpeed; }
-            set
-            {
-                _maxSpeed = value;
-            }
-        }
-
-        private int _maxFlightDistance;
-        public int MaxFlightDistance
-        {
-            get { return _maxFlightDistance; }
-            set
-            {
-                _maxFlightDistance = value;
-            }
-        }
-
-        private int _maxLoadCapacity;
-        public int MaxLoadCapacity
-        {
-            get { return _maxLoadCapacity; }
-            set
-            {
-                _maxLoadCapacity = value;
-            }
-        }
+        public string Model { get; private set; }
+        public int MaxSpeed { get; private set; }
+        public int MaxFlightDistance { get; private set; }
+        public int MaxLoadCapacity { get; private set; }
 
         public Plane(string model, int maxSpeed, int maxFlightDistance, int maxLoadCapacity)
         {
-            _model = model;
-            _maxSpeed = maxSpeed;
-            _maxFlightDistance = maxFlightDistance;
-            _maxLoadCapacity = maxLoadCapacity;
+            Model = model;
+            MaxSpeed = maxSpeed;
+            MaxFlightDistance = maxFlightDistance;
+            MaxLoadCapacity = maxLoadCapacity;
         }
 
         public override string ToString()
         {
-            return "Plane{" +
-                "model='" + _model + '\'' +
-                ", maxSpeed=" + _maxSpeed +
-                ", maxFlightDistance=" + _maxFlightDistance +
-                ", maxLoadCapacity=" + _maxLoadCapacity +
-                '}';
+            return $"Plane{{model='{Model}', maxSpeed={MaxSpeed}, maxFlightDistance={MaxFlightDistance}, maxLoadCapacity={MaxLoadCapacity}}}";
         }
 
         public override bool Equals(object obj)
         {
-            var plane = obj as Plane;
-            return plane != null &&
-                   _model == plane._model &&
-                   _maxSpeed == plane._maxSpeed &&
-                   _maxFlightDistance == plane._maxFlightDistance &&
-                   _maxLoadCapacity == plane._maxLoadCapacity;
+            return obj is Plane plane &&
+                   Model == plane.Model &&
+                   MaxSpeed == plane.MaxSpeed &&
+                   MaxFlightDistance == plane.MaxFlightDistance &&
+                   MaxLoadCapacity == plane.MaxLoadCapacity;
         }
 
         public override int GetHashCode()
         {
-            return _model.GetHashCode() ^ _maxSpeed.GetHashCode() ^ _maxFlightDistance.GetHashCode() ^ _maxLoadCapacity.GetHashCode();
+            var hashCode = -1043886837;
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Model);
+            hashCode = hashCode * -1521134295 + MaxSpeed.GetHashCode();
+            hashCode = hashCode * -1521134295 + MaxFlightDistance.GetHashCode();
+            hashCode = hashCode * -1521134295 + MaxLoadCapacity.GetHashCode();
+            return hashCode;
+        }
+
+        public int CompareTo(Plane OtherPlane)
+        {
+            return MaxLoadCapacity.CompareTo(OtherPlane.MaxLoadCapacity);
         }
 
     }
